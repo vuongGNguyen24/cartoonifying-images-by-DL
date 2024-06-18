@@ -3,14 +3,18 @@
 + Cho phép trích chọn đặc trưng cho hình ảnh. Ví dụ: phát hiện các đường biên dọc và ngang của ảnh, khử nhiễu, phát hiện các chi tiết như bánh xe, biển số xe.
 + Các đặc trưng trên phụ thuộc vào các giá trị kernel. Ví dụ: prewitt kernell, laplace kernel.
 + Trong mạng CNN, các giá trị trên các kernel là các parameter (có thể huấn luyện được thông qua ảnh và nhãn tương ứng, cùng với quá trình lan truyền ngược).
+
 ![Các đặc trưng trong mạng Alexnet ở tầng thấp nhất](https://d2l.aivivn.com/_images/filters.png)
+
 *Các đặc trưng trong mạng Alexnet ở tầng thấp nhất*
 ## Cách thức hoạt động
 **Đối với $1$ đầu vào, $1$ đầu ra**
 Trượt cửa số của kernel bắt đầu ở ô đầu tiên, tìm ma trận là tích *Hadamard* (toán tử * trong numpy) giữa kernel với ma trận con tương ứng của ảnh.
 Kết quả của ô $(1, 1)$ là tổng giá trị của ma trận tìm được.
 Trượt cửa số trên lần lượt từ trái sang phải, từ trên xuống dưới thì thu được ảnh kết quả, ví dụ từ ô $(1, 1)$, chuyển sang ô $(1, 2)$.
+
 ![](https://raw.githubusercontent.com/iamaaditya/iamaaditya.github.io/master/images/conv_arithmetic/full_padding_no_strides_transposed.gif)
+
 *Minh hoạ quá trình tính toán tích chập cho ảnh*
 
 **Đối với nhiều đầu vào, nhiều đầu ra**
@@ -18,7 +22,9 @@ Cho rằng đầu vào có chiều sâu là $n$, đầu ra có chiều sâu là 
 
 **Stride**
 Dùng để giảm kích thước ảnh sau khi thực hiện tích chập (vì ảnh có kích thước quá lớn). Thay vì trượt cửa sổ kernel sau mỗi lần tính toán $1$ đơn vị, cửa số trên sẽ được trượt $s$ đơn vị. Do đó, kích thước của ảnh ở mỗi chiều sẽ giảm đi $s$ lần.
+
 ![](https://d2l.aivivn.com/_images/conv-stride.svg) 
+
 **Padding**
 Nếu tính toán tích chập như bình thường thì chúng ta sẽ mất các đặc trưng ở các vùng biên của ảnh. Vì vậy, padding sẽ thêm các giá trị $0$ vào các biên này.
 Đối với kernel kích thước là $n \times n$, $n$ lẻ, để tránh mất mát dữ liệu, thì padding sẽ là $\lfloor \frac{n}{2} \rfloor$.
